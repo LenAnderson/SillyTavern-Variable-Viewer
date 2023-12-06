@@ -1,6 +1,6 @@
 # Variable Viewer
 
-A quick and dirty way to show the local and global variables. Helpful while woring on ST scripts.
+A quick and dirty way to show the local and global variables. Helpful while working on ST scripts.
 
 
 
