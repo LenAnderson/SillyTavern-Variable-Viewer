@@ -1,0 +1,58 @@
+#vv--root {
+  display: flex;
+  width: calc((100vw - var(--sheldWidth) - 2px) / 2);
+  width: calc((100svw - var(--sheldWidth) - 2px) / 2);
+  max-height: calc(100vh - var(--topBarBlockSize));
+  max-height: calc(100svh - var(--topBarBlockSize));
+  min-height: 0;
+  position: fixed;
+  top: 0;
+  margin: 0;
+  right: 0;
+  left: calc(100% - var(--sheldWidth) / 2 + var(--sheldWidth) 1px);
+  padding: 5px;
+  margin-bottom: 5px;
+  backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
+  background-color: var(--SmartThemeBlurTintColor);
+  -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
+  z-index: 3000;
+  border: 1px solid var(--SmartThemeBorderColor);
+  box-shadow: none;
+  border-radius: 10px;
+  overflow: hidden;
+  scrollbar-width: thin;
+  flex-flow: column;
+  min-width: 100px;
+}
+#vv--root > .vv--entry {
+  margin: 0.5em 0.25em;
+  padding-bottom: 0.25em;
+}
+#vv--root > .vv--entry:has(+.vv--entry) {
+  border-bottom: 1px solid silver;
+  padding-bottom: 0.75em;
+}
+#vv--root > .vv--entry > .vv--title {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+#vv--root > .vv--entry > .vv--vars {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 1fr 100fr;
+}
+#vv--root > .vv--entry > .vv--vars > .vv--var {
+  display: contents;
+}
+#vv--root > .vv--entry > .vv--vars > .vv--var > .vv-label {
+  font-size: small;
+}
+#vv--root > .vv--entry > .vv--vars > .vv--var > .vv-val {
+  background-color: var(--black30a);
+  border: 1px solid var(--SmartThemeBorderColor);
+  border-radius: 5px;
+  padding: 2px;
+  flex: 1;
+  text-align: center;
+}
