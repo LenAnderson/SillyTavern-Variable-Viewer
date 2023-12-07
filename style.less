@@ -24,56 +24,70 @@
     flex-flow: column;
     min-width: 100px;
 
-    > .vv--entry {
-        margin: 0.5em 0.25em;
-        padding-bottom: 0.25em;
-        &:has(+.vv--entry) {
-            border-bottom: 1px solid silver;
-            padding-bottom: 0.75em;
+    > .vv--close {
+        cursor: pointer;
+        font-weight: bold;
+        position: absolute;
+        right: 15px;
+        top: 5px;
+        opacity: 0.5;
+        &:hover {
+            opacity: 1;
         }
-        > .vv--title {
-            display: flex;
-            flex-direction: row;
-            font-weight: bold;
-            gap: 1em;
+    }
 
-            > .vv--add {
-                cursor: pointer;
-                opacity: 0.5;
-                &:hover {
-                    opacity: 1;
-                }
+    > .vv--content {
+        > .vv--entry {
+            margin: 0.5em 0.25em;
+            padding-bottom: 0.25em;
+            &:has(+.vv--entry) {
+                border-bottom: 1px solid silver;
+                padding-bottom: 0.75em;
             }
-        }
-        > .vv--vars {
-            display: grid;
-            gap: 1em;
-            grid-template-columns: 5fr 1000fr 0.1fr;
-            > .vv--var {
-                display: contents;
-                > .vv--label {
-                    font-size: smaller;
-                }
-                > .vv--val {
-                    background-color: var(--black30a);
-                    border: 1px solid var(--SmartThemeBorderColor);
-                    border-radius: 5px;
-                    padding: 2px;
-                    flex: 1;
-                    text-align: center;
+            > .vv--title {
+                display: flex;
+                flex-direction: row;
+                font-weight: bold;
+                gap: 1em;
 
-                    > textarea {
-                        font-size: smaller;
+                > .vv--add {
+                    cursor: pointer;
+                    opacity: 0.5;
+                    &:hover {
+                        opacity: 1;
                     }
                 }
-                > .vv--actions {
-                    white-space: nowrap;
-                    > .vv--action {
-                        cursor: pointer;
-                        font-size: 1.5em;
-                        opacity: 0.5;
-                        &:hover {
-                            opacity: 1;
+            }
+            > .vv--vars {
+                display: grid;
+                gap: 1em;
+                grid-template-columns: 5fr 1000fr 0.1fr;
+                > .vv--var {
+                    display: contents;
+                    > .vv--label {
+                        font-size: smaller;
+                    }
+                    > .vv--val {
+                        background-color: var(--black30a);
+                        border: 1px solid var(--SmartThemeBorderColor);
+                        border-radius: 5px;
+                        padding: 2px;
+                        flex: 1;
+                        text-align: center;
+
+                        > textarea {
+                            font-size: smaller;
+                        }
+                    }
+                    > .vv--actions {
+                        white-space: nowrap;
+                        > .vv--action {
+                            cursor: pointer;
+                            font-size: 1.5em;
+                            opacity: 0.5;
+                            &:hover {
+                                opacity: 1;
+                            }
                         }
                     }
                 }

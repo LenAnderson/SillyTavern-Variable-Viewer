@@ -8,6 +8,7 @@ export class VariableViewer {
 	/**@type {Boolean}*/ isRunning = false;
 
 	/**@type {HTMLElement}*/ dom;
+	/**@type {HTMLElement}*/ content;
 
 	/**@type {String}*/ oldLocalVars;
 	/**@type {String}*/ oldGlobalVars;
@@ -33,14 +34,28 @@ export class VariableViewer {
 	render() {
 		this.unrender();
 		if (!this.isShown) return;
-		const root = document.createElement('div'); {
-			this.dom = root;
-			root.id = 'vv--root';
-			root.classList.add('vv--root');
-			root.classList.add('drawer-content');
-			root.classList.add('pinnedOpen');
-			document.body.append(root);
+		if (!this.dom) {
+			const root = document.createElement('div'); {
+				this.dom = root;
+				root.id = 'vv--root';
+				root.classList.add('vv--root');
+				root.classList.add('drawer-content');
+				root.classList.add('pinnedOpen');
+				const close = document.createElement('div'); {
+					close.classList.add('vv--close');
+					close.textContent = 'X';
+					close.title = 'Close panel';
+					close.addEventListener('click', ()=>this.toggle());
+					root.append(close);
+				}
+				const content = document.createElement('div'); {
+					this.content = content;
+					content.classList.add('vv--content');
+					root.append(content);
+				}
+			}
 		}
+		document.body.append(this.dom);
 		this.update();
 	}
 
@@ -115,7 +130,7 @@ export class VariableViewer {
 				});
 				panel.append(vars);
 			}
-			this.dom.append(panel);
+			this.content.append(panel);
 		}
 	}
 
@@ -134,7 +149,7 @@ export class VariableViewer {
 				this.oldLocalVars = lv;
 				this.oldGlobalVars = gv;
 				console.log('[STVV]', localVars, globalVars);
-				this.dom.innerHTML = '';
+				this.content.innerHTML = '';
 				this.renderVariables('Local Variables', localVars, false);
 				this.renderVariables('Global Variables', globalVars, true);
 			}
