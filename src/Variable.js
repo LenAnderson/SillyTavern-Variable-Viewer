@@ -9,6 +9,8 @@ export class Variable {
 	/**@type {HTMLElement}*/ dom;
 	/**@type {HTMLInputElement}*/ domValue;
 
+	/**@type {Number}*/ animStart;
+
 
 
 
@@ -75,11 +77,17 @@ export class Variable {
 
 	async update(newVal) {
 		this.dom.classList.remove('vv--add');
+		this.dom.classList.remove('vv--update');
+		await delay(1);
+		const now = new Date().getTime();
+		this.animStart = now;
 		this.value = newVal;
 		this.domValue.value = this.value;
 		this.dom.classList.add('vv--update');
 		await delay(2000);
-		this.dom.classList.remove('vv--update');
+		if (this.animStart == now) {
+			this.dom.classList.remove('vv--update');
+		}
 	}
 	async remove() {
 		this.dom.classList.add('vv--remove');
