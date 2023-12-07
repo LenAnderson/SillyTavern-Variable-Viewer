@@ -45,7 +45,7 @@
 #vv--root > .vv--entry > .vv--vars > .vv--var {
   display: contents;
 }
-#vv--root > .vv--entry > .vv--vars > .vv--var > .vv-label {
+#vv--root > .vv--entry > .vv--vars > .vv--var > .vv--label {
   font-size: small;
 }
 #vv--root > .vv--entry > .vv--vars > .vv--var > .vv-val {
