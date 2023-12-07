@@ -1,5 +1,6 @@
-import { chat_metadata } from "../../../../../script.js";
+import { callPopup, chat_metadata } from "../../../../../script.js";
 import { extension_settings, getContext } from "../../../../extensions.js";
+import { executeSlashCommands } from "../../../../slash-commands.js";
 import { delay } from "../../../../utils.js";
 
 export class VariableViewer {
@@ -7,6 +8,9 @@ export class VariableViewer {
 	/**@type {Boolean}*/ isRunning = false;
 
 	/**@type {HTMLElement}*/ dom;
+
+	/**@type {String}*/ oldLocalVars;
+	/**@type {String}*/ oldGlobalVars;
 
 
 
@@ -40,17 +44,35 @@ export class VariableViewer {
 		this.update();
 	}
 
-	renderVariables(panelTitle, variables) {
+	renderVariables(panelTitle, variables, global) {
 		const panel = document.createElement('div'); {
 			panel.classList.add('vv--entry');
 			const title = document.createElement('div'); {
 				title.classList.add('vv--title');
 				title.textContent = panelTitle;
+				const add = document.createElement('div'); {
+					add.classList.add('vv--add');
+					add.textContent ='➕';
+					add.title = 'Add new variable';
+					add.addEventListener('click', async()=>{
+						const name = await callPopup('Variable Name', 'input', '', {okButton:'OK', rows:1, wide:false, large:false});
+						if (!name) {
+							return;
+						}
+						const val = await callPopup('Variable Value', 'input', '', {okButton:'OK', rows:1, wide:false, large:false});
+						if (val === null || val === undefined) {
+							return;
+						}
+						executeSlashCommands(`/set${global?'global':''}var key="${name}" ${val}`);
+					});
+					title.append(add);
+				}
 				panel.append(title);
 			}
 			const vars = document.createElement('div'); {
 				vars.classList.add('vv--vars');
 				Object.keys(variables).forEach(key=>{
+					let ta;
 					const v = document.createElement('div'); {
 						v.classList.add('vv--var');
 						const lbl = document.createElement('div'); {
@@ -60,8 +82,33 @@ export class VariableViewer {
 						}
 						const val = document.createElement('div'); {
 							val.classList.add('vv--val');
-							val.textContent = variables[key];
+							ta = document.createElement('textarea'); {
+								ta.value = variables[key];
+								val.append(ta);
+							}
 							v.append(val);
+						}
+						const actions = document.createElement('div'); {
+							actions.classList.add('vv--actions');
+							const flush = document.createElement('span'); {
+								flush.classList.add('vv--action');
+								flush.textContent = '🚽';
+								flush.title = 'Flush variable';
+								flush.addEventListener('click', ()=>{
+									executeSlashCommands(`/flush${global?'global':''}var ${key}`);
+								});
+								actions.append(flush);
+							}
+							const save = document.createElement('span'); {
+								save.classList.add('vv--action');
+								save.textContent = '💾';
+								save.title = 'Set variable value';
+								save.addEventListener('click', ()=>{
+									executeSlashCommands(`/set${global?'global':''}var key="${key}" ${ta.value}`);
+								});
+								actions.append(save);
+							}
+							v.append(actions);
 						}
 						vars.append(v);
 					}
@@ -81,10 +128,16 @@ export class VariableViewer {
 		while (this.isShown) {
 			const localVars = chat_metadata.variables ?? {};
 			const globalVars = extension_settings?.variables?.global ?? {};
-			console.log('[STVV]', localVars, globalVars);
-			this.dom.innerHTML = '';
-			this.renderVariables('Local Variables', localVars);
-			this.renderVariables('Global Variables', globalVars);
+			const lv = JSON.stringify(localVars);
+			const gv = JSON.stringify(globalVars);
+			if (lv != this.oldLocalVars || gv != this.oldGlobalVars) {
+				this.oldLocalVars = lv;
+				this.oldGlobalVars = gv;
+				console.log('[STVV]', localVars, globalVars);
+				this.dom.innerHTML = '';
+				this.renderVariables('Local Variables', localVars, false);
+				this.renderVariables('Global Variables', globalVars, true);
+			}
 			await delay(200);
 		}
 		this.isRunning = false;
