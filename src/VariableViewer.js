@@ -1,5 +1,7 @@
 import { callPopup, chat_metadata } from "../../../../../script.js";
+import { dragElement } from "../../../../RossAscends-mods.js";
 import { extension_settings, getContext } from "../../../../extensions.js";
+import { loadMovingUIState } from "../../../../power-user.js";
 import { executeSlashCommands } from "../../../../slash-commands.js";
 import { delay } from "../../../../utils.js";
 import { Variable } from "./Variable.js";
@@ -45,11 +47,22 @@ export class VariableViewer {
 				this.dom = root;
 				root.id = 'vv--root';
 				root.classList.add('vv--root');
-				root.classList.add('drawer-content');
 				root.classList.add('pinnedOpen');
+				root.classList.add('draggable');
+				const move = document.createElement('div'); {
+					move.id = 'vv--rootheader';
+					move.classList.add('vv--move');
+					move.classList.add('fa-solid');
+					move.classList.add('fa-grip');
+					move.classList.add('drag-grabber');
+					move.classList.add('hoverglow');
+					root.append(move);
+				}
 				const close = document.createElement('div'); {
 					close.classList.add('vv--close');
-					close.textContent = 'X';
+					close.classList.add('fa-solid');
+					close.classList.add('fa-circle-xmark');
+					close.classList.add('hoverglow');
 					close.title = 'Close panel';
 					close.addEventListener('click', ()=>this.toggle());
 					root.append(close);
@@ -95,6 +108,8 @@ export class VariableViewer {
 			}
 		}
 		document.body.append(this.dom);
+		loadMovingUIState();
+		dragElement($(this.dom));
 		this.update();
 	}
 

@@ -48,14 +48,19 @@
   backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
   background-color: var(--SmartThemeBlurTintColor);
   -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
-  z-index: 3000;
+  z-index: 3001;
   border: 1px solid var(--SmartThemeBorderColor);
   box-shadow: none;
   border-radius: 10px;
   overflow: hidden;
   scrollbar-width: thin;
   flex-flow: column;
-  min-width: 100px;
+  min-width: 300px;
+}
+#vv--root > .vv--move {
+  position: absolute;
+  right: 35px;
+  top: 3px;
 }
 #vv--root > .vv--close {
   cursor: pointer;
@@ -63,10 +68,6 @@
   position: absolute;
   right: 15px;
   top: 5px;
-  opacity: 0.5;
-}
-#vv--root > .vv--close:hover {
-  opacity: 1;
 }
 #vv--root > .vv--content > .vv--entry {
   margin: 0.5em 0.25em;
