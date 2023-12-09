@@ -53,7 +53,7 @@ export class Variable {
 							save.textContent = '💾';
 							save.title = 'Set variable value';
 							save.addEventListener('click', ()=>{
-								executeSlashCommands(`/set${this.global?'global':''}var this.name="${this.name}" ${ta.value}`);
+								executeSlashCommands(`/set${this.global?'global':''}var name="${this.name}" ${ta.value}`);
 							});
 							actions.append(save);
 						}
