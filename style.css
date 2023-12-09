@@ -90,6 +90,22 @@
 #vv--root > .vv--content > .vv--entry > .vv--title > .vv--add:hover {
   opacity: 1;
 }
+#vv--root > .vv--content > .vv--entry > .vv--title > .vv--flushAll {
+  cursor: pointer;
+  opacity: 0.5;
+  position: relative;
+}
+#vv--root > .vv--content > .vv--entry > .vv--title > .vv--flushAll:hover {
+  opacity: 1;
+}
+#vv--root > .vv--content > .vv--entry > .vv--title > .vv--flushAll > .vv--first {
+  display: inline-block;
+}
+#vv--root > .vv--content > .vv--entry > .vv--title > .vv--flushAll > .vv--second {
+  display: inline-block;
+  transform: scaleX(-1);
+  margin-left: -5px;
+}
 #vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var {
   margin-bottom: 1em;
   animation-duration: 2s;

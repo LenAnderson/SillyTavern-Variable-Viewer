@@ -75,6 +75,23 @@
                         opacity: 1;
                     }
                 }
+
+                > .vv--flushAll {
+                    cursor: pointer;
+                    opacity: 0.5;
+                    position: relative;
+                    &:hover {
+                        opacity: 1;
+                    }
+                    > .vv--first {
+                        display: inline-block;
+                    }
+                    > .vv--second {
+                        display: inline-block;
+                        transform: scaleX(-1);
+                        margin-left: -5px;
+                    }
+                }
             }
             > .vv--vars {
                 // display: grid;

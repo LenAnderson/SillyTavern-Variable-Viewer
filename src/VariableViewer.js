@@ -93,6 +93,29 @@ export class VariableViewer {
 									});
 									title.append(add);
 								}
+								const flushAll = document.createElement('div'); {
+									flushAll.classList.add('vv--flushAll');
+									flushAll.title = `Flush all ${global?'global':'local'} variables`;
+									flushAll.addEventListener('click', async()=>{
+										const result = await callPopup(`Are you sure you want to flush all ${global?'global':'local'} variables? This step cannot be undone.`, 'confirm');
+										if (result === true) {
+											const varList = (global ? this.globalVarList : this.localVarList)
+												.map(it=>`/flush${global?'global':''}var ${it.name}`);
+											executeSlashCommands(varList.join(' | '));
+										}
+									});
+									const first = document.createElement('span'); {
+										first.classList.add('vv--first');
+										first.textContent = '🚽';
+										flushAll.append(first);
+									}
+									const second = document.createElement('span'); {
+										second.classList.add('vv--second');
+										second.textContent = '🚽';
+										flushAll.append(second);
+									}
+									title.append(flushAll);
+								}
 								panel.append(title);
 							}
 							const vars = document.createElement('div'); {
