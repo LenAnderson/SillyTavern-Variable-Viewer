@@ -73,9 +73,25 @@ export class VariableViewer {
 					[['Local', false], ['Global', true]].forEach(([panelTitle,global])=>{
 						const panel = document.createElement('div'); {
 							panel.classList.add('vv--entry');
+							panel.classList.add('inline-drawer');
 							const title = document.createElement('div'); {
 								title.classList.add('vv--title');
-								title.textContent = panelTitle;
+								const toggleWrapper = document.createElement('div'); {
+									toggleWrapper.classList.add('inline-drawer-toggle');
+									const toggle = document.createElement('div'); {
+										toggle.classList.add('inline-drawer-icon');
+										toggle.classList.add('fa-solid');
+										toggle.classList.add('fa-circle-chevron-up');
+										toggle.classList.add('down');
+										toggleWrapper.append(toggle);
+									}
+									title.append(toggleWrapper);
+								}
+								const lbl = document.createElement('div'); {
+									lbl.classList.add('vv--label');
+									lbl.textContent = panelTitle;
+									title.append(lbl);
+								}
 								const add = document.createElement('div'); {
 									add.classList.add('vv--add');
 									add.textContent ='➕';
@@ -121,6 +137,8 @@ export class VariableViewer {
 							const vars = document.createElement('div'); {
 								this[`${global?'global':'local'}Panel`] = vars;
 								vars.classList.add('vv--vars');
+								vars.classList.add('inline-drawer-content');
+								vars.style.display = 'block';
 								panel.append(vars);
 							}
 							this.content.append(panel);
@@ -133,6 +151,7 @@ export class VariableViewer {
 		document.body.append(this.dom);
 		loadMovingUIState();
 		dragElement($(this.dom));
+
 		this.update();
 	}
 

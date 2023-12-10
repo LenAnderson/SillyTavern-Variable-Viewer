@@ -72,6 +72,7 @@ export class Variable {
 				}
 			}
 		}
+		delay(2000).then(()=>this.dom.classList.remove('vv--add'));
 		return this.dom;
 	}
 
