@@ -133,6 +133,10 @@ export class JsonVariable {
 						this.domName = lbl;
 						lbl.classList.add('vv--label');
 						lbl.textContent = this.name;
+						lbl.title = `Click to collapse contents`;
+						lbl.addEventListener('click', ()=>{
+							this.dom.classList.toggle('vv--collapsed');
+						});
 						head.append(lbl);
 					}
 					const type = document.createElement('div'); {
