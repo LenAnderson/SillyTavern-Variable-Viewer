@@ -13,7 +13,16 @@
    25% { background-color: rgba(255 0 0 / 50%); }
   100% { background-color: rgba(0 0 0 / 0%); }
 }
-
+@media screen and (max-width: 1000px) {
+    body #vv--root {
+        top: var(--topBarBlockSize);
+        width: 100svw;
+        max-width: 100svw;
+        .vv--action {
+            font-size: 1.5em;
+        }
+    }
+}
 #vv--root {
 	display: flex;
 	width: calc((100vw - var(--sheldWidth) - 2px) /2);
@@ -31,7 +40,7 @@
     backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
     background-color: var(--SmartThemeBlurTintColor);
     -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
-    z-index: 3001;
+    z-index: 1000;
     border: 1px solid var(--SmartThemeBorderColor);
     box-shadow: none;
     border-radius: 10px;
@@ -98,15 +107,26 @@
                 // display: grid;
                 // gap: 1em;
                 // grid-template-columns: 5fr 1000fr 0.1fr;
-                > .vv--var {
-                    margin-bottom: 1em;
-
+                .vv--var {
                     animation-duration: 2s;
                     animation-timing-function: linear;
                     animation-delay: 0s;
                     &.vv--add { animation-name: vv--add; }
                     &.vv--update { animation-name: vv--update; }
                     &.vv--remove { animation-name: vv--remove; }
+
+                    .vv--var {
+                        border-left: 2px solid var(--SmartThemeEmColor);
+                        margin-left: 3px;
+                        padding-left: 5px;
+                        transition: border-left-color 500ms;
+                        &.vv--unsaved {
+                            border-left-color: red;
+                        }
+                    }
+                    &[data-vv--type="[]"] > .vv--body > .vv--var:not(:has(.vv--var)) {
+                        display: flex;
+                    }
 
                     > .vv--head {
                         display: flex;
@@ -115,32 +135,41 @@
                         > .vv--label {
                             flex: 0 0 auto;
                         }
+                        > .vv--type {
+                            color: var(--SmartThemeEmColor);
+                            margin-left: 0.5em;
+                        }
                         > .vv--actions {
                             flex: 1 1 auto;
                             text-align: right;
                             white-space: nowrap;
                             > .vv--action {
                                 cursor: pointer;
-                                font-size: 1.5em;
                                 opacity: 0.5;
+                                &.vv--mainAction {
+                                    font-size: 1.5em;
+                                }
                                 &:hover {
                                     opacity: 1;
                                 }
                             }
                         }
-                    }
-                    > .vv--val {
-                        background-color: var(--black30a);
-                        border: 1px solid var(--SmartThemeBorderColor);
-                        border-radius: 5px;
-                        padding: 2px;
-                        flex: 1;
-                        text-align: center;
-                        
-                        animation-iteration-count: 1;
-
-                        > textarea {
-                            font-size: smaller;
+                    }                    
+                    > .vv--body {
+                        flex: 1 1 auto;
+                        > .vv--val {
+                            background-color: var(--black30a);
+                            border: 1px solid var(--SmartThemeBorderColor);
+                            border-radius: 5px;
+                            padding: 2px;
+                            flex: 1;
+                            text-align: center;
+                            
+                            animation-iteration-count: 1;
+    
+                            > textarea {
+                                font-size: smaller;
+                            }
                         }
                     }
                 }

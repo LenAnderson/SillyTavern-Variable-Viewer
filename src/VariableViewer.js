@@ -1,10 +1,10 @@
-import { callPopup, chat_metadata } from "../../../../../script.js";
+import { callPopup, chat_metadata, saveSettingsDebounced } from "../../../../../script.js";
 import { dragElement } from "../../../../RossAscends-mods.js";
-import { extension_settings, getContext } from "../../../../extensions.js";
+import { extension_settings } from "../../../../extensions.js";
 import { loadMovingUIState } from "../../../../power-user.js";
 import { executeSlashCommands } from "../../../../slash-commands.js";
 import { delay } from "../../../../utils.js";
-import { Variable } from "./Variable.js";
+import { JsonVariable } from "./JsonVariable.js";
 
 export class VariableViewer {
 	/**@type {Boolean}*/ isShown = true;
@@ -18,8 +18,8 @@ export class VariableViewer {
 	/**@type {String}*/ oldLocalVars;
 	/**@type {String}*/ oldGlobalVars;
 
-	/**@type {Variable[]}*/ localVarList = [];
-	/**@type {Variable[]}*/ globalVarList = [];
+	/**@type {JsonVariable[]}*/ localVarList = [];
+	/**@type {JsonVariable[]}*/ globalVarList = [];
 
 
 
@@ -31,6 +31,8 @@ export class VariableViewer {
 		} else {
 			this.unrender();
 		}
+		extension_settings.variabe_viewer.isShown = this.isShown;
+		saveSettingsDebounced();
 	}
 
 
@@ -89,7 +91,7 @@ export class VariableViewer {
 								}
 								const lbl = document.createElement('div'); {
 									lbl.classList.add('vv--label');
-									lbl.textContent = panelTitle;
+									lbl.textContent = String(panelTitle);
 									title.append(lbl);
 								}
 								const add = document.createElement('div'); {
@@ -170,8 +172,8 @@ export class VariableViewer {
 				this.oldLocalVars = lv;
 				this.oldGlobalVars = gv;
 				console.log('[STVV]', localVars, globalVars);
-				this.updateVars(this.localVarList, localVars, this.localPanel, false);
-				this.updateVars(this.globalVarList, globalVars, this.globalPanel, true);
+				await this.updateVars(this.localVarList, localVars, this.localPanel, false);
+				await this.updateVars(this.globalVarList, globalVars, this.globalPanel, true);
 			}
 			await delay(200);
 		}
@@ -179,8 +181,8 @@ export class VariableViewer {
 	}
 
 
-	updateVars(oldVars, newVars, container, global) {
-		newVars = Object.keys(newVars).map(key=>new Variable(key, newVars[key], global)).toSorted((a,b)=>a.name.localeCompare(b.name));
+	async updateVars(oldVars, newVars, container, global) {
+		newVars = Object.keys(newVars).map(key=>new JsonVariable(key, newVars[key], global)).toSorted((a,b)=>a.name.localeCompare(b.name));
 		
 		const toRemove = oldVars.filter(o=>!newVars.find(n=>o.name==n.name));
 		toRemove.forEach(it=>it.remove());
@@ -191,8 +193,11 @@ export class VariableViewer {
 			}
 		}
 
-		const toUpdate = oldVars.filter(o=>o.value!=newVars.find(n=>o.name==n.name).value);
-		toUpdate.forEach(o=>o.update(newVars.find(n=>n.name==o.name).value));
+		const toUpdate = oldVars.filter(o=>!o.equals(newVars.find(n=>o.name==n.name)));
+		for (const o of toUpdate) {
+			const n = newVars.find(n=>n.name==o.name);
+			await o.update(n);
+		}
 		
 		const toAdd = newVars.filter(n=>!oldVars.find(o=>n.name==o.name));
 		oldVars.push(...toAdd);

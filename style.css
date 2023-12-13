@@ -31,6 +31,16 @@
     background-color: rgba(0 0 0 / 0%);
   }
 }
+@media screen and (max-width: 1000px) {
+  body #vv--root {
+    top: var(--topBarBlockSize);
+    width: 100svw;
+    max-width: 100svw;
+  }
+  body #vv--root .vv--action {
+    font-size: 1.5em;
+  }
+}
 #vv--root {
   display: flex;
   width: calc((100vw - var(--sheldWidth) - 2px) / 2);
@@ -48,7 +58,7 @@
   backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
   background-color: var(--SmartThemeBlurTintColor);
   -webkit-backdrop-filter: blur(calc(var(--SmartThemeBlurStrength)));
-  z-index: 3001;
+  z-index: 1000;
   border: 1px solid var(--SmartThemeBorderColor);
   box-shadow: none;
   border-radius: 10px;
@@ -109,43 +119,63 @@
   transform: scaleX(-1);
   margin-left: -5px;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var {
-  margin-bottom: 1em;
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var {
   animation-duration: 2s;
   animation-timing-function: linear;
   animation-delay: 0s;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var.vv--add {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var.vv--add {
   animation-name: vv--add;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var.vv--update {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var.vv--update {
   animation-name: vv--update;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var.vv--remove {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var.vv--remove {
   animation-name: vv--remove;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--head {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var .vv--var {
+  border-left: 2px solid var(--SmartThemeEmColor);
+  margin-left: 3px;
+  padding-left: 5px;
+  transition: border-left-color 500ms;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var .vv--var.vv--unsaved {
+  border-left-color: red;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var[data-vv--type="[]"] > .vv--body > .vv--var:not(:has(.vv--var)) {
+  display: flex;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--head > .vv--label {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--label {
   flex: 0 0 auto;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--head > .vv--actions {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--type {
+  color: var(--SmartThemeEmColor);
+  margin-left: 0.5em;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--actions {
   flex: 1 1 auto;
   text-align: right;
   white-space: nowrap;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--head > .vv--actions > .vv--action {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--actions > .vv--action {
   cursor: pointer;
-  font-size: 1.5em;
   opacity: 0.5;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--head > .vv--actions > .vv--action:hover {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--actions > .vv--action.vv--mainAction {
+  font-size: 1.5em;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--head > .vv--actions > .vv--action:hover {
   opacity: 1;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--val {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--body {
+  flex: 1 1 auto;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--body > .vv--val {
   background-color: var(--black30a);
   border: 1px solid var(--SmartThemeBorderColor);
   border-radius: 5px;
@@ -154,6 +184,6 @@
   text-align: center;
   animation-iteration-count: 1;
 }
-#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var > .vv--val > textarea {
+#vv--root > .vv--content > .vv--entry > .vv--vars .vv--var > .vv--body > .vv--val > textarea {
   font-size: smaller;
 }
