@@ -130,6 +130,13 @@
                 // display: grid;
                 // gap: 1em;
                 // grid-template-columns: 5fr 1000fr 0.1fr;
+                > .vv--var {
+                    border-left: 2px solid transparent;
+                    transition: border-left-color 500ms;
+                    &.vv--unsaved {
+                        border-left-color: red;
+                    }
+                }
                 .vv--var {
                     animation-duration: 2s;
                     animation-timing-function: linear;
@@ -186,7 +193,7 @@
                                 }
                             }
                         }
-                    }                    
+                    }
                     > .vv--body {
                         flex: 1 1 auto;
                         > .vv--val {
@@ -196,9 +203,9 @@
                             padding: 2px;
                             flex: 1;
                             text-align: center;
-                            
+
                             animation-iteration-count: 1;
-    
+
                             > textarea {
                                 font-size: smaller;
                             }

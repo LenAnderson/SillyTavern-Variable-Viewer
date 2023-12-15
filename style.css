@@ -141,6 +141,13 @@
   transform: scaleX(-1);
   margin-left: -5px;
 }
+#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var {
+  border-left: 2px solid transparent;
+  transition: border-left-color 500ms;
+}
+#vv--root > .vv--content > .vv--entry > .vv--vars > .vv--var.vv--unsaved {
+  border-left-color: red;
+}
 #vv--root > .vv--content > .vv--entry > .vv--vars .vv--var {
   animation-duration: 2s;
   animation-timing-function: linear;
