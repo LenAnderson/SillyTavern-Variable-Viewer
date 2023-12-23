@@ -254,6 +254,8 @@ export class JsonVariable {
                             }
                             body.append(val);
                         }
+                    } else if (this.type == '[]') {
+                        this.children.toSorted((a,b)=>Number(a) - Number(b)).forEach(it=>body.append(it.render()));
                     } else {
                         this.children.toSorted((a,b)=>a.name.localeCompare(b.name)).forEach(it=>body.append(it.render()));
                     }
