@@ -42,7 +42,7 @@ export class JsonVariable {
                 value = JSON.parse(value);
             } catch { /* empty */ }
         }
-        if (typeof value == 'object') {
+        if (value !== null && typeof value == 'object') {
             if (Array.isArray(value)) {
                 this.type = '[]';
                 this.children = value.map((it,idx)=>new JsonVariable(String(idx), it, global, this));
