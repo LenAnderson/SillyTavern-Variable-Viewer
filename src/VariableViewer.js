@@ -104,6 +104,14 @@ export class VariableViewer {
                     fontSizeDown.addEventListener('click', ()=>this.decreaseFontSize());
                     root.append(fontSizeDown);
                 }
+                const max = document.createElement('div'); {
+                    max.classList.add('vv--maximize');
+                    max.classList.add('hoverglow');
+                    max.title = 'Maximize';
+                    max.textContent = '◱';
+                    max.addEventListener('click', ()=>root.classList.toggle('vv--maximized'));
+                    root.append(max);
+                }
                 const move = document.createElement('div'); {
                     move.id = 'vv--rootheader';
                     move.classList.add('vv--move');

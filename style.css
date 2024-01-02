@@ -52,6 +52,9 @@
   padding-top: 25px;
   flex-flow: column;
 }
+#vv--root.vv--maximized {
+  width: 100vw;
+}
 #vv--root > .vv--fontSizeUp {
   cursor: pointer;
   font-weight: bold;
@@ -72,6 +75,17 @@
   opacity: 0.5;
 }
 #vv--root > .vv--fontSizeDown:hover {
+  opacity: 1;
+}
+#vv--root > .vv--maximize {
+  cursor: pointer;
+  font-weight: bold;
+  position: absolute;
+  left: 55px;
+  top: 5px;
+  opacity: 0.5;
+}
+#vv--root > .vv--maximize:hover {
   opacity: 1;
 }
 #vv--root > .vv--move {
