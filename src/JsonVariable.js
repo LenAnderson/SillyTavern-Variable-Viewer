@@ -247,7 +247,7 @@ export class JsonVariable {
                                 ta.value = this.value;
                                 ta.addEventListener('input', ()=>{
                                     //TODO update unsaved status
-                                    this.value = ta.value.trim();
+                                    this.value = ta.value;
                                     this.dom.classList[this.isUnsaved ? 'add' : 'remove']('vv--unsaved');
                                 });
                                 val.append(ta);
